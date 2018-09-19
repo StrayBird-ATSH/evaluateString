@@ -14,14 +14,7 @@ public class ReversePolishNotation {
 
         StringBuilder result = new StringBuilder();
         Stack<String> stackForOperators = new Stack<>();
-
-
-        operatorPriority.put("(", 0);
-        operatorPriority.put("+", 1);
-        operatorPriority.put("-", 1);
-        operatorPriority.put("*", 2);
-        operatorPriority.put("/", 2);
-
+        initiatePriority();
         input = stringPreprocessor(input);
         String[] delimitedInput = input.split(" ");
 
@@ -72,7 +65,6 @@ public class ReversePolishNotation {
             result.append(stackForOperators.pop());
             result.append(" ");
         }
-
         System.out.println(result);
     }
 
@@ -118,5 +110,37 @@ public class ReversePolishNotation {
         input = input.replaceAll("floor", " floor ");
         input = input.replaceAll("rint", " rint ");
         return input;
+    }
+
+    private static void initiatePriority() {
+        operatorPriority.put("(", 0);
+        operatorPriority.put("|", 1);
+        operatorPriority.put("^", 2);
+        operatorPriority.put("&", 3);
+        operatorPriority.put("<<", 4);
+        operatorPriority.put(">>", 4);
+        operatorPriority.put(">>>", 4);
+        operatorPriority.put("+", 5);
+        operatorPriority.put("-", 5);
+        operatorPriority.put("*", 6);
+        operatorPriority.put("/", 6);
+        operatorPriority.put("%", 6);
+        operatorPriority.put("mod", 6);
+        operatorPriority.put("~", 7);
+        operatorPriority.put("sin", 8);
+        operatorPriority.put("cos", 8);
+        operatorPriority.put("tan", 8);
+        operatorPriority.put("asin", 8);
+        operatorPriority.put("acos", 8);
+        operatorPriority.put("atan", 8);
+        operatorPriority.put("toRadians", 8);
+        operatorPriority.put("toDegree", 8);
+        operatorPriority.put("exp", 8);
+        operatorPriority.put("log", 8);
+        operatorPriority.put("sqrt", 8);
+        operatorPriority.put("cbrt", 8);
+        operatorPriority.put("ceil", 8);
+        operatorPriority.put("floor", 8);
+        operatorPriority.put("rint", 8);
     }
 }
