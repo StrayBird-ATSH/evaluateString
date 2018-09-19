@@ -121,6 +121,7 @@ class ReversePolishNotation {
         input = input.replaceAll("ceil", " ceil ");
         input = input.replaceAll("floor", " floor ");
         input = input.replaceAll("rint", " rint ");
+        input = input.replace("(  - ", "( -");
         return input;
     }
 

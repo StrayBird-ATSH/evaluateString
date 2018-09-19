@@ -113,7 +113,11 @@ class EvalPostFix {
      * @return true if the String is a number, false otherwise
      */
     static private boolean isNum(String str) {
-        String numRegex = "^\\d+(\\.\\d+)?$";
-        return Pattern.matches(numRegex, str);
+        try {
+            Double.parseDouble(str);
+        } catch (Exception e) {
+            System.out.println("There is an invalid element at " + str);
+        }
+        return true;
     }
 }
