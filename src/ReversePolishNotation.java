@@ -21,17 +21,18 @@ public class ReversePolishNotation {
         for (String element : delimitedInput) {
             if (element.equals(""))
                 continue;
-            if (element.equals("(")) {             //如果是'('直接压栈
+            if (element.equals("("))             //Push directly if meets left bracket
                 stackForOperators.push("(");
-            } else if (isOperator(element)) {  //如果是运算符
-                if (stackForOperators.isEmpty())               //如果运算符栈是空，就直接压栈
+            else if (isOperator(element))
+                if (stackForOperators.isEmpty())
                     stackForOperators.push(element);
-                else if (operatorPriority.get(element) > operatorPriority.get(stackForOperators.peek()))
-                    //运算符栈不为空，且当当前运算符的优先级比站内第一个运算符的优先级高的时候，压栈
+                else if (operatorPriority.get(element) >
+                        operatorPriority.get(stackForOperators.peek()))
+                    //Higher priority
                     stackForOperators.push(element);
-                else {                               //栈不为空，且运算符的优先级小于等于栈顶元素
+                else {                               //Lower priority
                     for (int j = 0; j <= stackForOperators.size(); j++) {
-                        String poppedElement = stackForOperators.pop();    //弹出栈内第一个元素
+                        String poppedElement = stackForOperators.pop();
                         result.append(poppedElement);
                         result.append(" ");
                         if (stackForOperators.isEmpty()) {
@@ -44,7 +45,7 @@ public class ReversePolishNotation {
                         }
                     }
                 }
-            } else if (element.equals(")")) {       //如果是')'就把站内'('上的元素都弹出栈
+            else if (element.equals(")"))
                 for (int j = 0; j < stackForOperators.size(); j++) {
                     String poppedElement1 = stackForOperators.pop();
                     if (poppedElement1.equals("("))
@@ -54,13 +55,11 @@ public class ReversePolishNotation {
                         result.append(" ");
                     }
                 }
-            } else {
-                //如果是数字就直接添加
+            else {
                 result.append(element);
                 result.append(" ");
             }
         }
-        //把栈内剩余的运算符都弹出站
         for (int i = 0; i <= stackForOperators.size(); i++) {
             result.append(stackForOperators.pop());
             result.append(" ");
@@ -68,10 +67,20 @@ public class ReversePolishNotation {
         System.out.println(result);
     }
 
+
+    /**
+     * @param element The current element from the String array
+     * @return True if the String is an operator
+     */
     private static boolean isOperator(String element) {
         return operatorPriority.containsKey(element);
     }
 
+
+    /**
+     * @param input The raw input from user input
+     * @return A String that has delimited the elements with space
+     */
     private static String stringPreprocessor(String input) {
         input = input.replaceAll("\\(", " ( ");
         input = input.replaceAll("\\)", " ) ");
@@ -112,6 +121,10 @@ public class ReversePolishNotation {
         return input;
     }
 
+
+    /**
+     * Initiates the priority map
+     */
     private static void initiatePriority() {
         operatorPriority.put("(", 0);
         operatorPriority.put("|", 1);
