@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-
 class ReversePolishNotation {
     private static Map<String, Integer> operatorPriority = new HashMap<>();
 

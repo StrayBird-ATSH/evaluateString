@@ -2,29 +2,36 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Stack;
+import java.util.regex.Pattern;
 
 class EvalPostFix {
+    /**
+     * @param exp The processed post-fix expression
+     * @return Calculated result of the expression
+     */
     static double eval(@NotNull String exp) {
         String doubleOperator = "*/%+-&^|<<>>>";
-        String singleOperator =
-                "~ sin cos tan asin acos atan toRadians toDegrees" +
-                        "exp log sqrt cbrt ceil floor rint";
         String[] delimitedExp = exp.split(" ");
         Stack<String> stack = new Stack<>();
-        for (String element : delimitedExp) {
-            if (ReversePolishNotation.isOperator(element)) {
+        for (String element : delimitedExp)
+            if (ReversePolishNotation.isOperator(element))
                 if (doubleOperator.contains(element))
                     stack.push(Double.toString(evaluateSingle(element,
                             Double.parseDouble(stack.pop()),
                             Double.parseDouble(stack.pop()))));
-                else if (singleOperator.contains(element))
-                    stack.push(Double.toString(evaluateSingle(element,
-                            Double.parseDouble(stack.pop()))));
-            } else stack.push(element);
-        }
+                else stack.push(Double.toString(evaluateSingle(element,
+                        Double.parseDouble(stack.pop()))));
+            else if (isNum(element)) stack.push(element);
+            else System.out.println("Invalid expression found at element: " + element);
         return Double.parseDouble(stack.pop());
     }
 
+    /**
+     * @param operator Currently processing operator
+     * @param var2     the first popped number
+     * @param var3     the second popped number
+     * @return The result of this single expression
+     */
     @Contract(pure = true)
     private static double evaluateSingle(@NotNull String operator, double var2, double var3) {
         switch (operator) {
@@ -55,8 +62,13 @@ class EvalPostFix {
         return 0;
     }
 
+    /**
+     * @param operator Currently processing operator
+     * @param var2     the first popped number
+     * @return The result of this single expression
+     */
     @Contract(pure = true)
-    private static double evaluateSingle(String operator, double var2) {
+    private static double evaluateSingle(@NotNull String operator, double var2) {
         switch (operator) {
             case "~":
                 return ~(int) var2;
@@ -90,8 +102,18 @@ class EvalPostFix {
                 return Math.floor(var2);
             case "rint":
                 return Math.rint(var2);
-
         }
         return 0;
+    }
+
+    /**
+     * Determines whether the element is a number
+     *
+     * @param str the input String
+     * @return true if the String is a number, false otherwise
+     */
+    static private boolean isNum(String str) {
+        String numRegex = "^\\d+(\\.\\d+)?$";
+        return Pattern.matches(numRegex, str);
     }
 }
