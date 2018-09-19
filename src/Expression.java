@@ -23,8 +23,8 @@ public class Expression {
     public static void main(String arges[]) {
         Expression exper = Expression.getExpresser();
         try {
-            System.out.println((-2 * 3) + 6 - 4 / 6);
-            System.out.println(exper.calculate("(-2*3)+6-4/6"));
+            System.out.println((-2 * ((4 + 2)*2)) + (6 - 4) / 6);
+            System.out.println(exper.calculate("(-2 * ((4 + 2)*2)) + (6 - 4) / 6"));
         } catch (Exception e) {
             e.printStackTrace();
         }
