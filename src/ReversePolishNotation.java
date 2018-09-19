@@ -1,17 +1,20 @@
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Stack;
 
 
-public class ReversePolishNotation {
+class ReversePolishNotation {
     private static Map<String, Integer> operatorPriority = new HashMap<>();
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-        sc.close();
-
+    /**
+     * @param input The mid-fix expression
+     * @return The processed post-fix expression
+     */
+    @NotNull
+    static String evaluate(String input) {
         StringBuilder result = new StringBuilder();
         Stack<String> stackForOperators = new Stack<>();
         initiatePriority();
@@ -65,14 +68,15 @@ public class ReversePolishNotation {
             result.append(" ");
         }
         System.out.println(result);
+        return result.toString();
     }
-
 
     /**
      * @param element The current element from the String array
      * @return True if the String is an operator
      */
-    private static boolean isOperator(String element) {
+    @Contract(pure = true)
+    static boolean isOperator(String element) {
         return operatorPriority.containsKey(element);
     }
 
@@ -147,7 +151,7 @@ public class ReversePolishNotation {
         operatorPriority.put("acos", 8);
         operatorPriority.put("atan", 8);
         operatorPriority.put("toRadians", 8);
-        operatorPriority.put("toDegree", 8);
+        operatorPriority.put("toDegrees", 8);
         operatorPriority.put("exp", 8);
         operatorPriority.put("log", 8);
         operatorPriority.put("sqrt", 8);
