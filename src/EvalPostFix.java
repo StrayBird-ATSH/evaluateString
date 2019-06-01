@@ -2,7 +2,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Stack;
-import java.util.regex.Pattern;
 
 class EvalPostFix {
     /**
